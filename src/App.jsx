@@ -1,23 +1,39 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import TodoForm from "./components/TodoForm";
+import { useState, useEffect } from "react";
 import TodoList from "./components/TodoList";
+import TodoForm from "./components/TodoForm";
+import ThemeToggle from "./components/ThemeToggle";
+import "./App.css";
 
 function App() {
   const [todos, setTodos] = useState([]);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const savedTodos = localStorage.getItem("todos");
+    const savedTheme = localStorage.getItem("darkMode");
 
     if (savedTodos) {
       const parsedTodos = JSON.parse(savedTodos);
       setTodos(parsedTodos);
+    }
+
+    if (savedTheme !== null) {
+      setDarkMode(savedTheme === "true");
     }
   }, []);
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", String(darkMode));
+    if (darkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, [darkMode]);
 
   const addTodo = (text) => {
     if (text.trim()) {
@@ -52,8 +68,13 @@ function App() {
     }
   };
 
+  const toggleTheme = () => {
+    setDarkMode((prevMode) => !prevMode);
+  };
+
   return (
-    <div className={"app-container"}>
+    <div className={`app-container ${darkMode ? "dark-mode" : ""}`}>
+      <ThemeToggle darkMode={darkMode} toggleTheme={toggleTheme} />
       <div className="todo-app">
         <div className="app-header">
           <h1>ToDo App</h1>

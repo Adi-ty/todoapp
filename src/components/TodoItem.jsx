@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { Check, Pencil, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -43,10 +44,10 @@ function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
             autoFocus
           />
           <button className="todo-button" onClick={handleSave} title="Save">
-            ✅
+            <Check />
           </button>
           <button className="todo-button" onClick={handleCancel} title="Cancel">
-            ❌
+            <X />
           </button>
         </div>
       ) : (
@@ -63,14 +64,14 @@ function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
           </span>
           <div className="todo-actions">
             <button className="todo-button" onClick={handleEdit} title="Edit">
-              ✏️
+              <Pencil />
             </button>
             <button
               className="todo-button delete"
               onClick={() => deleteTodo(todo.id)}
               title="Delete"
             >
-              🗑️
+              <Trash2 />
             </button>
           </div>
         </>
