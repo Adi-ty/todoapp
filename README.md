@@ -1,12 +1,42 @@
-# React + Vite
+# Todo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive React Todo application with dark mode support and persistent storage.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ✅ Create, edit and delete tasks with an intuitive interface
+- ✅ Mark tasks as complete/incomplete with visual feedback
+- 🌓 Dark/light theme toggle for comfortable viewing in any environment
+- 💾 Persistent storage using localStorage to retain tasks between sessions
+- 📱 Responsive design works on mobile, tablet, and desktop
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React 19 with Hooks for state management
+- Vite for fast development and optimized builds
+- Lucide React for beautiful, lightweight icons
+- ESLint & Prettier for code quality and consistent formatting
+- CSS Variables for theming support
+
+## Usage
+
+- **Add a task**: Type in the input field and press Enter or click "Add"
+- **Mark as complete**: Click the checkbox next to a task
+- **Edit a task**: Click the edit (pencil) icon, modify the text, and press Enter
+- **Delete a task**: Click the delete (trash) icon
+- **Toggle theme**: Click the sun/moon icon in the top right corner
+
+## Project Structure
+
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ThemeToggle.jsx  # Dark/light mode switch
+│   ├── TodoForm.jsx     # Form for adding new tasks
+│   ├── TodoItem.jsx     # Individual task component
+│   └── TodoList.jsx     # Container for all tasks
+├── App.css              # Main styling
+├── App.jsx              # App component with main state
+├── index.css            # Global CSS
+└── main.jsx             # Entry point
+```
