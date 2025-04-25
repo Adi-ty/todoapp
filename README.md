@@ -2,6 +2,8 @@
 
 A modern, responsive React Todo application with dark mode support and persistent storage.
 
+<img width="1173" alt="Screenshot 2025-04-25 at 2 14 14 PM" src="https://github.com/user-attachments/assets/4a3a26fe-1587-4c6c-b715-7c14c1123751" />
+
 ## Features
 
 - ✅ Create, edit and delete tasks with an intuitive interface
@@ -40,3 +42,14 @@ src/
 ├── index.css            # Global CSS
 └── main.jsx             # Entry point
 ```
+
+## Screenshots
+
+- Dark Mode
+
+<img alt="Screenshot 2025-04-25 at 2 09 24 PM" src="https://github.com/user-attachments/assets/359288d2-3789-46a3-98e7-602892c3f5a6" />
+
+- Light Mode
+<img alt="Screenshot 2025-04-25 at 2 09 44 PM" src="https://github.com/user-attachments/assets/bafe69c5-f627-4b3b-8445-8b8cc452c002" />
+
+
