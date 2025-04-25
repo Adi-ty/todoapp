@@ -1,32 +1,76 @@
+/**
+ * @file TodoItem.jsx
+ *
+ * TodoItem component for rendering individual todo items.
+ *
+ * @package Todo_App
+ */
+
 import { Check, Pencil, Trash2, X } from "lucide-react";
 import { memo, useState } from "react";
 
+/**
+ * Represents a single todo item in the list.
+ * Allows viewing, editing, completing, and deleting a todo.
+ *
+ * @param {object} props - Component props.
+ * @param {object} props.todo - The todo item data ({ id, text, completed }).
+ * @param {Function} props.toggleComplete - Function to toggle the completion status.
+ * @param {Function} props.deleteTodo - Function to delete the todo item.
+ * @param {Function} props.editTodo - Function to save edited todo text.
+ *
+ * @component
+ *
+ * @returns {JSX.Element} The rendered todo item.
+ */
 function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
+  /**
+   * State to track if the item is currently being edited.
+   * @type {[boolean, Function]}
+   */
   const [isEditing, setIsEditing] = useState(false);
+  /**
+   * State to hold the text while editing.
+   * @type {[string, Function]}
+   */
   const [editText, setEditText] = useState(todo.text);
 
+  /**
+   * Enters editing mode and sets the initial edit text.
+   */
   const handleEdit = () => {
     setIsEditing(true);
     setEditText(todo.text);
   };
 
+  /**
+   * Saves the edited todo text if it's valid and changed, then exits editing mode.
+   */
   const handleSave = () => {
     const trimmedText = editText.trim();
-    if (trimmedText && trimmedText !== todo.text) {
+    if (trimmedText && todo.text !== trimmedText) {
       editTodo(todo.id, trimmedText);
     }
     setIsEditing(false);
   };
 
+  /**
+   * Cancels editing mode and resets the edit text.
+   */
   const handleCancel = () => {
     setEditText(todo.text);
     setIsEditing(false);
   };
 
+  /**
+   * Handles keydown events (Enter, Escape) in the edit input field.
+   *
+   * @param {React.KeyboardEvent<HTMLInputElement>} e - The keyboard event.
+   */
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if ("Enter" === e.key) {
       handleSave();
-    } else if (e.key === "Escape") {
+    } else if ("Escape" === e.key) {
       handleCancel();
     }
   };
@@ -39,6 +83,7 @@ function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
             type="text"
             className="edit-input"
             value={editText}
+            maxLength={50}
             onChange={(e) => setEditText(e.target.value)}
             onKeyDown={handleKeyDown}
             autoFocus
@@ -60,7 +105,7 @@ function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
             aria-checked={todo.completed}
             tabIndex="0"
             onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
+              if ("Enter" === e.key || " " === e.key) {
                 toggleComplete(todo.id);
                 e.preventDefault();
               }

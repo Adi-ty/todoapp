@@ -1,3 +1,8 @@
+/**
+* Main Stylesheet for the Todo App
+* 
+* @package Todo_App
+*/
 :root {
   --bg-color: #f8f9fa;
   --card-bg: #ffffff;
