@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 
 function TodoForm({ addTodo }) {
   const [input, setInput] = useState("");
@@ -25,4 +25,4 @@ function TodoForm({ addTodo }) {
   );
 }
 
-export default TodoForm;
+export default memo(TodoForm);

@@ -1,26 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import TodoList from "./components/TodoList";
 import TodoForm from "./components/TodoForm";
 import ThemeToggle from "./components/ThemeToggle";
 import "./App.css";
 
 function App() {
-  const [todos, setTodos] = useState([]);
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
+  const [todos, setTodos] = useState(() => {
     const savedTodos = localStorage.getItem("todos");
-    const savedTheme = localStorage.getItem("darkMode");
-
-    if (savedTodos) {
-      const parsedTodos = JSON.parse(savedTodos);
-      setTodos(parsedTodos);
-    }
-
-    if (savedTheme !== null) {
-      setDarkMode(savedTheme === "true");
-    }
-  }, []);
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  });
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+  });
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -35,42 +26,42 @@ function App() {
     }
   }, [darkMode]);
 
-  const addTodo = (text) => {
+  const addTodo = useCallback((text) => {
     if (text.trim()) {
       const newTodo = {
         id: Date.now(),
-        text,
+        text: text.trim(),
         completed: false,
       };
       setTodos((prevTodos) => [...prevTodos, newTodo]);
     }
-  };
+  }, []);
 
-  const deleteTodo = (id) => {
+  const deleteTodo = useCallback((id) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-  };
+  }, []);
 
-  const toggleComplete = (id) => {
+  const toggleComplete = useCallback((id) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      ),
     );
-  };
+  }, []);
 
-  const editTodo = (id, newText) => {
+  const editTodo = useCallback((id, newText) => {
     if (newText.trim()) {
       setTodos((prevTodos) =>
         prevTodos.map((todo) =>
-          todo.id === id ? { ...todo, text: newText } : todo
-        )
+          todo.id === id ? { ...todo, text: newText.trim() } : todo,
+        ),
       );
     }
-  };
+  }, []);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setDarkMode((prevMode) => !prevMode);
-  };
+  }, []);
 
   return (
     <div className={`app-container ${darkMode ? "dark-mode" : ""}`}>
@@ -79,12 +70,16 @@ function App() {
         <div className="app-header">
           <h1>ToDo App</h1>
         </div>
-        <TodoList
-          todos={todos}
-          toggleComplete={toggleComplete}
-          deleteTodo={deleteTodo}
-          editTodo={editTodo}
-        />
+        {todos.length === 0 ? (
+          <p className="empty-message">No tasks yet. Add one below!</p>
+        ) : (
+          <TodoList
+            todos={todos}
+            toggleComplete={toggleComplete}
+            deleteTodo={deleteTodo}
+            editTodo={editTodo}
+          />
+        )}
         <TodoForm addTodo={addTodo} />
       </div>
     </div>

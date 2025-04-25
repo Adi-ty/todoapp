@@ -1,4 +1,5 @@
 import { Moon, Sun } from "lucide-react";
+import { memo } from "react";
 
 function ThemeToggle({ darkMode, toggleTheme }) {
   return (
@@ -7,9 +8,9 @@ function ThemeToggle({ darkMode, toggleTheme }) {
       className="theme-toggle-fixed"
       title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {darkMode ? <Sun /> : <Moon />}
+      {darkMode ? <Sun color="yellow" /> : <Moon color="blue" />}
     </button>
   );
 }
 
-export default ThemeToggle;
+export default memo(ThemeToggle);

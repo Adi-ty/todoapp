@@ -1,20 +1,20 @@
 import { Check, Pencil, Trash2, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { memo, useState } from "react";
 
 function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(todo.text);
 
-  useEffect(() => {
-    setEditText(todo.text);
-  }, [todo.text]);
-
   const handleEdit = () => {
     setIsEditing(true);
+    setEditText(todo.text);
   };
 
   const handleSave = () => {
-    editTodo(todo.id, editText);
+    const trimmedText = editText.trim();
+    if (trimmedText && trimmedText !== todo.text) {
+      editTodo(todo.id, trimmedText);
+    }
     setIsEditing(false);
   };
 
@@ -56,8 +56,17 @@ function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
             className="custom-checkbox"
             onClick={() => toggleComplete(todo.id)}
             title={todo.completed ? "Mark as incomplete" : "Mark as complete"}
+            role="checkbox"
+            aria-checked={todo.completed}
+            tabIndex="0"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                toggleComplete(todo.id);
+                e.preventDefault();
+              }
+            }}
           >
-            {todo.completed && <div className="checkmark"></div>}
+            {todo.completed && <div className="checkmark" />}
           </div>
           <span className={`todo-text ${todo.completed ? "completed" : ""}`}>
             {todo.text}
@@ -80,4 +89,10 @@ function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
   );
 }
 
-export default TodoItem;
+export default memo(TodoItem, (prevProps, nextProps) => {
+  return (
+    prevProps.todo.id === nextProps.todo.id &&
+    prevProps.todo.text === nextProps.todo.text &&
+    prevProps.todo.completed === nextProps.todo.completed
+  );
+});
