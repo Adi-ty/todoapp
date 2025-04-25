@@ -45,8 +45,9 @@ function TodoForm({ addTodo }) {
         value={input}
         maxLength={50}
         onChange={(e) => setInput(e.target.value)}
+        aria-label="New task input"
       />
-      <button type="submit" className="add-button">
+      <button type="submit" className="add-button" aria-label="Add new task">
         Add
       </button>
     </form>

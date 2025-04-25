@@ -87,11 +87,22 @@ function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
             onChange={(e) => setEditText(e.target.value)}
             onKeyDown={handleKeyDown}
             autoFocus
+            aria-label="Edit todo text"
           />
-          <button className="todo-button" onClick={handleSave} title="Save">
+          <button
+            className="todo-button"
+            onClick={handleSave}
+            title="Save"
+            aria-label="Save"
+          >
             <Check />
           </button>
-          <button className="todo-button" onClick={handleCancel} title="Cancel">
+          <button
+            className="todo-button"
+            onClick={handleCancel}
+            title="Cancel"
+            aria-label="Cancel"
+          >
             <X />
           </button>
         </div>
@@ -117,13 +128,19 @@ function TodoItem({ todo, toggleComplete, deleteTodo, editTodo }) {
             {todo.text}
           </span>
           <div className="todo-actions">
-            <button className="todo-button" onClick={handleEdit} title="Edit">
+            <button
+              className="todo-button"
+              onClick={handleEdit}
+              title="Edit"
+              aria-label="Edit"
+            >
               <Pencil />
             </button>
             <button
               className="todo-button delete"
               onClick={() => deleteTodo(todo.id)}
               title="Delete"
+              aria-label="Delete"
             >
               <Trash2 />
             </button>
