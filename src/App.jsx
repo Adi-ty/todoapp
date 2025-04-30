@@ -41,12 +41,10 @@ function App() {
     return localStorage.getItem("darkMode") === "true";
   });
 
-  // Effect to save todos to localStorage whenever they change.
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
-  // Effect to save theme preference and apply/remove dark-mode class to body.
   useEffect(() => {
     localStorage.setItem("darkMode", String(darkMode));
     if (darkMode) {
@@ -124,7 +122,7 @@ function App() {
         <div className="app-header">
           <h1>ToDo App</h1>
         </div>
-        {todos.length === 0 ? (
+        {0 === todos.length ? (
           <p className="empty-message">No tasks yet. Add one below!</p>
         ) : (
           <TodoList
